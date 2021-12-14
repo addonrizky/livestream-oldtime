@@ -1,0 +1,62 @@
+version: '3.6'
+
+services:
+    livestream:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: livestream
+        ports:
+            - 9090:9090
+        environment: 
+            - "APPENV=development"
+        volumes:
+            - ./:/app
+        networks:
+            - local
+        depends_on: 
+            - postgres
+            - redis
+    postgres:
+        image: postgres:12.0-alpine
+        environment:
+            POSTGRES_DB: livestream
+            POSTGRES_PASSWORD: livestream123
+            POSTGRES_USER: livestream_user
+            PGDATA: /var/lib/postgresql/data/asumsi-livestream
+        container_name: postgres-livestream
+        volumes:
+            - .docker/postgres-data:/var/lib/postgresql/data/asumsi-livestream
+            - .docker/database_scripts:/docker-entrypoint-initdb.d
+            - .docker/seeding/seeds:/seeds
+        ports:
+            - "5432:5432"
+        networks:
+            - local
+    redis:
+        container_name: redis-livestream
+        image: redis:latest
+        ports:
+            - "6379:6379"
+        volumes:
+            - .docker/cache-data:/var/lib/cache
+            - .docker/cache.conf:/usr/local/etc/cache/cache.conf
+        networks:
+            - local
+    mongo:
+        container_name: mongo-asumsi-livestream
+        image: mongo
+        environment: 
+        - MONGO_INITDB_DATABASE=livestream
+        - MONGO_INITDB_ROOT_USERNAME=livestream_user
+        - MONGO_INITDB_ROOT_PASSWORD=livestream123
+        ports: 
+        - '27017-27019:27017-27019'
+        volumes:
+            - .docker/mongo-data:/data/db
+        networks:
+            - local
+
+networks:
+    local:
+        driver: bridge

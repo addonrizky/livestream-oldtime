@@ -1,0 +1,33 @@
+{
+  "debug": true,
+  "appName": "livetream",
+  "url": "http://localhost:9090",
+  "server": {
+    "address": ":9090"
+  },
+  "context":{
+    "timeout":200
+  },
+  "database": {
+    "host": "34.101.236.119",
+    "port": "5432",
+    "user": "postgres",
+    "pass": "kZ3yr37JLY3Nr3JUbuEg",
+    "name": "livestream"
+  },
+  "security": {
+    "jwt": {
+        "method": "HS256",
+        "secret": "L!V35TR3@M!",
+        "lifespan": 77760000000000,
+        "lifespanRefresh": 259200
+    }
+  },
+  "google": {
+    "clientId": "1015818525325-rrvom1t1fkcrsjjkjn4dc8pfg4ema62s.apps.googleusercontent.com",
+    "clientSecret": "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",
+    "scopeURL": "https://www.googleapis.com/auth/userinfo.email",
+    "redirectURL": "http://localhost:9090/api/v1/google-callback",
+    "oauthStateString": "TEST"
+  }
+}
