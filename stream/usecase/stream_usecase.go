@@ -151,6 +151,7 @@ func (a *streamRepo) StartStreaming(roomId string) (map[string]interface{}, *mod
 		errorObject.ErrorActual = err
 		errorObject.ErrorMessage = "fail unmarshal ffmpegInstancesByte to objectFfmpegInstances"
 		return nil, errorObject
+		//check only
 	}
 
 	// get path of SDP file to be consumed by FFMPEG instance 

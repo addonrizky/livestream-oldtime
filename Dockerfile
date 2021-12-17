@@ -14,7 +14,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o rtpforwarder .
 
 FROM alpine:latest
 WORKDIR /app
-RUN apk add busybox-extras && apk add ffmpeg
+RUN apk add ffmpeg
 ENV RTP_SESSION "eyJkdW1teXVzZXIiIDogIjAwMDAifQ=="
 ENV PORT_USED "WyI0MDA4Il0="
 ENV SDP_DIRECTORY "sdpcollection"
@@ -29,5 +29,5 @@ RUN mkdir logs && chmod -R 777 logs
 RUN mkdir sdpcollection && chmod -R 777 sdpcollection
 
 
-EXPOSE 9090
+EXPOSE 8080
 CMD ["./main"]
